@@ -39,7 +39,7 @@ export function getCurrentConferenceUrl(stateful: Function | Object) {
  * @returns {string}
  */
 export function getInviteURL(stateOrGetState: Function | Object): string {
-    return window.location.ancestorOrigins.length ? window.location.ancestorOrigins[0] : window.location.href
+    return window.location.ancestorOrigins.length ? window.location.ancestorOrigins[0] : window.location.href;
     // const state = toState(stateOrGetState);
     // let locationURL
     //     = state instanceof URL
