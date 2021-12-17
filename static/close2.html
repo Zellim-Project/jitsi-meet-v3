@@ -1,23 +1,613 @@
-<html>
-<head>
-    <!--#include virtual="/base.html" -->
-    <link rel="stylesheet" href="css/all.css"/>
-    <!--#include virtual="/title.html" -->
-    <script><!--#include virtual="/interface_config.js" --></script>
-    <script src="static/close.js"></script>
-</head>
-<body>
-    <div class="redirectPageMessage">
-        <div class="thanks-msg">
-            <p id="thanksMessage"></p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Zellim</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        background: #1f2126;
+        color: #dfdfdf;
+        font-family: "Nunito", sans-serif;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      h1 {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      h2 {
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 24px;
+        margin-bottom: 12px;
+      }
+
+      h3 {
+        color: #b3b6bc;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 16px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        text-align: center;
+      }
+
+      .btn.blue {
+        font-weight: 700;
+        background: #3888ff;
+      }
+
+      .btn.outline-grey {
+        border: 1px solid #b3b6bc;
+        color: #b3b6bc;
+        margin: 0 12px;
+      }
+
+      .btn.outline-blue {
+        border: 1px solid #3888ff;
+        color: #3888ff;
+        margin: 0 12px;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .box {
+        padding: 24px 0;
+        margin: 0 12px;
+        box-sizing: border-box;
+      }
+
+      /* rating */
+
+      .rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0 24px 0;
+      }
+
+      .rating form {
+        display: inline-block;
+      }
+
+      .rating form fieldset {
+        border: none;
+      }
+
+      .star-group {
+        font-size: 0;
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .star-group * {
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+
+      .star-group > input {
+        display: none;
+      }
+
+      .star-group > input + label {
+        display: inline-block;
+        overflow: hidden;
+        text-indent: 9999px;
+        width: 1em;
+        white-space: nowrap;
+        cursor: pointer;
+        padding: 0 5px;
+      }
+
+      .star-group > input + label:before {
+        display: inline-block;
+        text-indent: -9999px;
+        content: url("data:image/svg+xml;charset=UTF-8, <svg width='30' height='29' viewBox='0 0 30 29' xmlns='http://www.w3.org/2000/svg'><path d='M14.9998 1.6665L19.1198 10.0132L28.3332 11.3598L21.6665 17.8532L23.2398 27.0265L14.9998 22.6932L6.75984 27.0265L8.33317 17.8532L1.6665 11.3598L10.8798 10.0132L14.9998 1.6665Z' fill='none' stroke='%23B3B6BC' stroke-width='2.66667' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      }
+
+      .star-group > input:checked ~ label:before,
+      .star-group > input + label:hover ~ label:before,
+      .star-group > input + label:hover:before {
+        content: url("data:image/svg+xml;charset=UTF-8, <svg width='30' height='29' viewBox='0 0 30 29' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M14.9998 1.6665L19.1198 10.0132L28.3332 11.3598L21.6665 17.8532L23.2398 27.0265L14.9998 22.6932L6.75984 27.0265L8.33317 17.8532L1.6665 11.3598L10.8798 10.0132L14.9998 1.6665Z' fill='white' stroke='white' stroke-width='2.66667' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        background-size: cover;
+        text-shadow: 0 0 1px #333;
+      }
+
+      .star-group > .star-clear + label {
+        text-indent: -9999px;
+        width: 0.5em;
+        margin-left: -0.5em;
+        padding: 0;
+      }
+
+      .star-group > .star-clear + label:before {
+        width: 0.5em;
+      }
+
+      .star-group:hover > input + label:before {
+        content: url("data:image/svg+xml;charset=UTF-8, <svg width='30' height='29' viewBox='0 0 30 29' xmlns='http://www.w3.org/2000/svg'><path d='M14.9998 1.6665L19.1198 10.0132L28.3332 11.3598L21.6665 17.8532L23.2398 27.0265L14.9998 22.6932L6.75984 27.0265L8.33317 17.8532L1.6665 11.3598L10.8798 10.0132L14.9998 1.6665Z' fill='none' stroke='%23B3B6BC' stroke-width='2.66667' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        text-shadow: none;
+      }
+
+      .star-group:hover > input + label:hover ~ label:before,
+      .star-group:hover > input + label:hover:before {
+        content: url("data:image/svg+xml;charset=UTF-8, <svg width='30' height='29' viewBox='0 0 30 29' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M14.9998 1.6665L19.1198 10.0132L28.3332 11.3598L21.6665 17.8532L23.2398 27.0265L14.9998 22.6932L6.75984 27.0265L8.33317 17.8532L1.6665 11.3598L10.8798 10.0132L14.9998 1.6665Z' fill='white' stroke='white' stroke-width='2.66667' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        background-size: cover;
+        text-shadow: 0 0 1px #333;
+      }
+
+      .rating-result {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+      }
+
+      .rating-result span {
+        content: url("data:image/svg+xml;charset=UTF-8, <svg width='30' height='29' viewBox='0 0 30 29' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M14.9998 1.6665L19.1198 10.0132L28.3332 11.3598L21.6665 17.8532L23.2398 27.0265L14.9998 22.6932L6.75984 27.0265L8.33317 17.8532L1.6665 11.3598L10.8798 10.0132L14.9998 1.6665Z' fill='white' stroke='white' stroke-width='2.66667' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        background-size: cover;
+        display: inline-block;
+        overflow: hidden;
+        text-indent: -9999px;
+        width: 1em;
+        white-space: nowrap;
+        cursor: default;
+        padding: 0 5px;
+        margin: 0 0 24px;
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+
+      .rating-result span.regular {
+        content: url("data:image/svg+xml;charset=UTF-8, <svg width='30' height='29' viewBox='0 0 30 29' xmlns='http://www.w3.org/2000/svg'><path d='M14.9998 1.6665L19.1198 10.0132L28.3332 11.3598L21.6665 17.8532L23.2398 27.0265L14.9998 22.6932L6.75984 27.0265L8.33317 17.8532L1.6665 11.3598L10.8798 10.0132L14.9998 1.6665Z' fill='none' stroke='%23B3B6BC' stroke-width='2.66667' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      }
+
+      .inner-box {
+        text-align: center;
+        background: #393e4a;
+        border: 1px solid #313643;
+        box-sizing: border-box;
+        border-radius: 4px;
+        padding: 24px;
+        margin-bottom: 32px;
+        margin-top: 24px;
+        display: inline-block;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .buttons a:first-child {
+        margin-left: 0;
+      }
+
+      .buttons a:last-child {
+        margin-right: 0;
+      }
+
+      .thank-you,
+      .what-happened,
+      .join-room-again {
+        display: none;
+      }
+
+      .thank-you {
+        margin-bottom: 24px;
+      }
+
+      .tell-us {
+      }
+
+      .tell-us p,
+      .join-room-again p {
+        font-size: 14px;
+        line-height: 16px;
+        margin-bottom: 4px;
+      }
+
+      .tell-us textarea {
+        width: 100%;
+        height: 95px;
+        background: #444a58;
+        color: #dfdfdf;
+        border: 1px solid #313643;
+        box-sizing: border-box;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        padding: 8px;
+      }
+
+      .tell-us span {
+        width: 100%;
+        display: inline-block;
+        text-align: right;
+      }
+
+      .join-room-again .room-name {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .join-room-again .room-name input {
+        width: 100%;
+        color: #dfdfdf;
+        height: 38px;
+        line-height: 36px;
+        padding: 0 8px;
+        background: #444a58;
+        border: 1px solid #313643;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+      }
+
+      .join-room-again .room-name .btn {
+        float: right;
+      }
+
+      .tell-us textarea:focus,
+      .join-room-again .room-name input:focus {
+        outline: none;
+      }
+
+      #room-name.error,
+      #tell-us.error {
+        border-color: #6b0104;
+      }
+
+      p.error {
+        color: red;
+        margin-bottom: 8px;
+      }
+
+      @media (min-width: 556px) {
+        body {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .box {
+          width: 538px;
+          background: #2f333d;
+          border: 1px solid #313643;
+          border-radius: 4px;
+          padding: 64px;
+          margin: 0;
+        }
+
+        .rating {
+          margin: 0 0 24px 0;
+        }
+
+        .inner-box {
+          margin-bottom: 24px;
+        }
+
+        .join-room-again .room-name {
+          width: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+        }
+
+        .join-room-again .room-name input {
+          width: unset;
+          margin-bottom: 0;
+          flex-grow: 1;
+          margin-right: 12px;
+        }
+
+        .join-room-again .room-name .btn {
+          float: none;
+          flex-grow: 0;
+        }
+      }
+    </style>
+    <script>
+      function goto(url) {
+        parent.postMessage(
+          {
+            redirect: url,
+          },
+          "*"
+        );
+        window.location.href = url;
+      }
+
+      function validURL(str) {
+        const pattern = new RegExp(
+          "^(https?:\\/\\/)?" + // protocol
+            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+            "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+            "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+            "(\\#[-a-z\\d_]*)?$",
+          "i"
+        ); // fragment locator
+        return !!pattern.test(str);
+      }
+
+      function isDomain(domain, url) {
+        const pat =
+          "^https?://(?:[^/@:]*:[^/@]*@)?(?:[^/:]+\.)?" + domain + "(?=[/:]|$)";
+        const re = new RegExp(pat, "i");
+        return re.test(url);
+      }
+
+      $(document).ready(function () {
+        let rating;
+
+        $(".btn.outline-grey").click(function (e) {
+          e.preventDefault();
+          const currentStep = $(this).attr("data-currentStep");
+          $(currentStep).fadeOut("fast", function () {
+            $(".join-room-again").fadeIn("fast");
+            $("#room-name").focus();
+          });
+        });
+
+        $("label").click(function (e) {
+          e.stopPropagation();
+          rating = $(this)
+            .attr("for")
+            .substr($(this).attr("for").length - 1);
+          let request;
+          if (request) {
+            request.abort();
+          }
+          if (rating === "5") {
+            $(".rating").fadeOut("fast", function () {
+              $(".thank-you").fadeIn("fast");
+            });
+            const data = {
+              rating: rating,
+              comment: "",
+            };
+            request = $.ajax({
+              url: "form.php",
+              type: "post",
+              data: data,
+            });
+          } else {
+            for (let i = 0; i < rating; i++) {
+              $(".what-happened .rating-result").append(
+                "<span>" + i + "</span>"
+              );
+            }
+            const diff = 5 - rating;
+            for (let i = 0; i < diff; i++) {
+              $(".what-happened .rating-result").append(
+                "<span class='regular'>" + i + "</span>"
+              );
+            }
+            $(".start").fadeOut("fast", function () {
+              $(".what-happened").fadeIn("fast");
+              $("#tell-us").focus();
+            });
+          }
+        });
+
+        $(".join-now").click(function (e) {
+          e.preventDefault();
+          $("#room-name").removeClass("error");
+          $("p.error").remove();
+          let value = $("#room-name").val();
+          if (value) {
+            if (validURL(value)) {
+              value = value.indexOf("://") === -1 ? "https://" + value : value;
+              if (isDomain("zellim.us", value)) {
+                goto(value)
+              } else {
+                $(".reference").after(
+                  '<p class="error">Please insert a valid Zellim room name or link</p>'
+                );
+                $("#room-name").addClass("error").focus();
+              }
+            } else {
+              goto("https://" + value + ".zellim.us")
+            }
+          } else {
+            $(".reference").after(
+              '<p class="error">Please insert a room name or link</p>'
+            );
+            $("#room-name").addClass("error").focus();
+          }
+        });
+
+        $(".submit").click(function (e) {
+          e.preventDefault();
+          let request;
+          if (request) {
+            request.abort();
+          }
+          $("#tell-us").removeClass("error");
+          $("p.error").remove();
+          let value = $("#tell-us").val();
+          if (value) {
+            const data = {
+              rating: rating,
+              comment: value,
+            };
+            request = $.ajax({
+              url: "form.php",
+              type: "post",
+              data: data,
+            });
+            $("#tell-us").prop("disabled", true);
+            $(".submit").fadeOut("fast");
+            $(".thank-you").fadeIn("fast");
+          } else {
+            $("#tell-us").after(
+              '<p class="error">Please type a comment about your experience</p>'
+            );
+            $("#tell-us").addClass("error").focus();
+          }
+        });
+
+        $("#signup").click(e => {
+            e.preventDefault()
+            goto('https://app.zellim.com/signup')
+        })
+
+        $("#gohome").click(e => {
+            e.preventDefault()
+            goto('https://zellim.com/')
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <div class="box">
+      <div class="start">
+        <h1>Rate Your Meeting</h1>
+
+        <div class="rating">
+          <form name="ratingForm">
+            <fieldset>
+              <span class="star-group">
+                <input
+                  type="radio"
+                  id="rating-5"
+                  name="rating"
+                  value="5"
+                /><label for="rating-5">5</label>
+                <input
+                  type="radio"
+                  id="rating-4"
+                  name="rating"
+                  value="4"
+                  checked="checked"
+                /><label for="rating-4">4</label>
+                <input
+                  type="radio"
+                  id="rating-3"
+                  name="rating"
+                  value="3"
+                /><label for="rating-3">3</label>
+                <input
+                  type="radio"
+                  id="rating-2"
+                  name="rating"
+                  value="2"
+                /><label for="rating-2">2</label>
+                <input
+                  type="radio"
+                  id="rating-1"
+                  name="rating"
+                  value="1"
+                /><label for="rating-1">1</label>
+              </span>
+            </fieldset>
+          </form>
         </div>
-        <div class="hint-msg">
-            <p>
-                <span id="hintQuestion">Did you know?</span>
-                <span class="hint-msg__holder" id="hintMessage"></span>
-            </p>
-            <div class="happy-software"></div>
+
+        <div class="thank-you">
+          <div class="rating-result">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+          </div>
+          <h3 class="text-center">Thank you for your rating</h3>
         </div>
+
+        <div class="inner-box">
+          <h2>Host your own meetings</h2>
+          <h3>Host meetings up to 40 min and 100 participants for free.</h3>
+          <a
+            href="#!"
+            id="signup"
+            class="btn blue"
+            title="Create a Free Account Now"
+            >Create a Free Account Now</a
+          >
+        </div>
+
+        <div class="buttons">
+          <a
+            href="#"
+            class="btn outline-grey"
+            title="Join room again"
+            data-currentStep=".start"
+            >Join room again</a
+          >
+          <a
+            href="#!"
+            id="gohome"
+            class="btn outline-blue"
+            title="Back to home"
+            >Back to home</a
+          >
+        </div>
+      </div>
+
+      <div class="what-happened">
+        <h1>Rate Your Meeting</h1>
+        <div class="rating-result"></div>
+        <div class="tell-us">
+          <div class="thank-you">
+            <h3 class="text-center">Thank you for your comment</h3>
+          </div>
+          <p>Tell us what happened</p>
+          <textarea id="tell-us"></textarea>
+          <span>
+            <a href="#" class="btn blue submit" title="Submit">Submit</a>
+          </span>
+        </div>
+      </div>
+
+      <div class="join-room-again">
+        <h1>Insert the room name or link and click join now</h1>
+        <p class="reference">Room name or link</p>
+        <div class="room-name">
+          <input type="text" name="room-name" id="room-name" />
+          <a href="#" class="btn blue join-now" title="Join Now">Join Now</a>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
