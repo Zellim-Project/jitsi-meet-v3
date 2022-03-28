@@ -54,6 +54,7 @@ export function disconnect(requestFeedback: boolean = false) {
         const isModerator = localParticipant.role === PARTICIPANT_ROLE.MODERATOR;
         const { _room } = APP.conference;
 
+        console.log({isModerator}, localParticipant)
         if (isModerator) {
             dispatch(openDialog(KickAllParticipantsDialog, { participantsID: Object.keys(_room.participants) }));
         } else {
