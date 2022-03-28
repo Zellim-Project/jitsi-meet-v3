@@ -108,22 +108,22 @@ var interfaceConfig = {
      *
      * @type {boolean}
      */
-    MOBILE_APP_PROMO: false,
+    MOBILE_APP_PROMO: true,
 
     /**
      * Specify custom URL for downloading android mobile app.
      */
-    MOBILE_DOWNLOAD_LINK_ANDROID: 'https://play.google.com/store/apps/details?id=com.zellim.chat',
+    MOBILE_DOWNLOAD_LINK_ANDROID: 'https://play.google.com/store/apps/details?id=org.zellim.meet',
 
     /**
      * Specify custom URL for downloading f droid app.
      */
-    MOBILE_DOWNLOAD_LINK_F_DROID: 'https://play.google.com/store/apps/details?id=com.zellim.chat',
+    MOBILE_DOWNLOAD_LINK_F_DROID: 'https://play.google.com/store/apps/details?id=org.zellim.meet',
 
     /**
      * Specify URL for downloading ios mobile app.
      */
-    MOBILE_DOWNLOAD_LINK_IOS: 'https://apps.apple.com/br/app/zellim-chat/id1544323519?l=en',
+    MOBILE_DOWNLOAD_LINK_IOS: 'https://apps.apple.com/us/app/zellim-meet/id1614163777?l=en',
 
     NATIVE_APP_NAME: 'Zellim Chat',
 
