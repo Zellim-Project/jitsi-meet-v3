@@ -52,6 +52,8 @@ export function disconnect(requestFeedback: boolean = false) {
     // XXX For web based version we use conference hanging up logic from the old
     // app.
     return (dispatch: Dispatch<any>, getState: Function) => {
+        console.log('CALLED HERE')
+
         const localParticipant = getLocalParticipant(getState());
         const isModerator = localParticipant.role === PARTICIPANT_ROLE.MODERATOR;
         const { _room } = APP.conference;
