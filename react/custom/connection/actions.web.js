@@ -5,17 +5,19 @@ import type { Dispatch } from 'redux';
 declare var APP: Object;
 declare var config: Object;
 
-import { configureInitialDevices } from '../devices';
-import { getBackendSafeRoomName } from '../util';
+import { configureInitialDevices } from '../../features/base/devices';
+import { getBackendSafeRoomName } from '../../features/base/util';
 
 export {
     connectionDisconnected,
     connectionEstablished,
     connectionFailed,
     setLocationURL
-} from './actions.native';
-import logger from './logger';
+} from '../../features/base/connection/actions.native';
+import logger from '../../features/base/connection/logger';
+
 import KickAllParticipantsDialog from '../components/KickAll/KickAllParticipantsDialog';
+import { getLocalParticipant, PARTICIPANT_ROLE } from '../../features/base/participants';
 
 
 /**
