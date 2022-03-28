@@ -18,6 +18,7 @@ import logger from '../../features/base/connection/logger';
 
 import KickAllParticipantsDialog from '../components/KickAll/KickAllParticipantsDialog';
 import { getLocalParticipant, PARTICIPANT_ROLE } from '../../features/base/participants';
+import { openDialog } from '../../features/base/dialog';
 
 
 /**
