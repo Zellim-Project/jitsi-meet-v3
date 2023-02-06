@@ -40,32 +40,33 @@ export function getCurrentConferenceUrl(stateful: IStateful) {
  * @returns {string}
  */
 export function getInviteURL(stateOrGetState: IStateful): string {
-    const state = toState(stateOrGetState);
-    let locationURL
-        = state instanceof URL
-            ? state
-            : state['features/base/connection'].locationURL;
+    return window.location.ancestorOrigins.length ? window.location.ancestorOrigins[0] : window.location.href;
+    // const state = toState(stateOrGetState);
+    // let locationURL
+    //     = state instanceof URL
+    //         ? state
+    //         : state['features/base/connection'].locationURL;
 
-    // If there's no locationURL on the base/connection feature try the base/config where it's set earlier.
-    if (!locationURL) {
-        locationURL = state['features/base/config'].locationURL;
-    }
+    // // If there's no locationURL on the base/connection feature try the base/config where it's set earlier.
+    // if (!locationURL) {
+    //     locationURL = state['features/base/config'].locationURL;
+    // }
 
-    if (!locationURL) {
-        throw new Error('Can not get invite URL - the app is not ready');
-    }
+    // if (!locationURL) {
+    //     throw new Error('Can not get invite URL - the app is not ready');
+    // }
 
-    const { inviteDomain } = state['features/dynamic-branding'];
-    const urlWithoutParams = getURLWithoutParams(locationURL);
+    // const { inviteDomain } = state['features/dynamic-branding'];
+    // const urlWithoutParams = getURLWithoutParams(locationURL);
 
-    if (inviteDomain) {
-        const meetingId
-            = state['features/base/config'].brandingRoomAlias || urlWithoutParams.pathname.replace(/\//, '');
+    // if (inviteDomain) {
+    //     const meetingId
+    //         = state['features/base/config'].brandingRoomAlias || urlWithoutParams.pathname.replace(/\//, '');
 
-        return `${inviteDomain}/${meetingId}`;
-    }
+    //     return `${inviteDomain}/${meetingId}`;
+    // }
 
-    return urlWithoutParams.href;
+    // return urlWithoutParams.href;
 }
 
 /**
