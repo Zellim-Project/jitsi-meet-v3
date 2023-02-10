@@ -293,7 +293,7 @@ export function parseStandardURIString(str: string) {
     } else {
         pathname = '/';
     }
-    obj.pathname = pathname;
+    obj.pathname = '/'; // TODO-MIKE
 
     // query
     if (str.startsWith('?')) {
@@ -359,7 +359,10 @@ export function parseURIString(uri?: string): any {
 
     const contextRootEndIndex = pathname.lastIndexOf('/');
 
-    obj.room = pathname.substring(contextRootEndIndex + 1) || undefined;
+    // obj.room = pathname.substring(contextRootEndIndex + 1) || undefined;
+    const [ room ] = obj.hostname.split('.');
+
+    obj.room = room; // TODO-MIKE
 
     if (contextRootEndIndex > 1) {
         // The part of the pathname from the beginning to the room name is the tenant.
@@ -527,7 +530,7 @@ export function urlObjectToString(o: { [key: string]: any; }): string | undefine
         pathname += room;
     }
 
-    url.pathname = pathname;
+    url.pathname = '/'; // TODO-MIKE
 
     // query/search
 

@@ -59,8 +59,10 @@ export function appNavigate(uri?: string) {
                 // FIXME Turn location's host, hostname, and port properties into
                 // setters in order to reduce the risks of inconsistent state.
                 location.hostname = defaultLocation.hostname;
-                location.pathname
-                    = defaultLocation.pathname + location.pathname.substr(1);
+
+                // location.pathname
+                //     = defaultLocation.pathname + location.pathname.substr(1);
+                location.pathname = ''; // TODO-MIKE
                 location.port = defaultLocation.port;
                 location.protocol = defaultLocation.protocol;
             } else {

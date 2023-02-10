@@ -6,10 +6,13 @@ import { getBackendSafeRoomName } from '../util/uri';
  * @returns {string}
  */
 export default function getRoomName(): string | undefined {
-    const path = window.location.pathname;
+    // const path = window.location.pathname;
 
-    // The last non-directory component of the path (name) is the room.
-    const roomName = path.substring(path.lastIndexOf('/') + 1) || undefined;
+    // // The last non-directory component of the path (name) is the room.
+    // const roomName = path.substring(path.lastIndexOf('/') + 1) || undefined;
 
-    return getBackendSafeRoomName(roomName);
+    // return getBackendSafeRoomName(roomName);
+    const [ room ] = window.location.hostname.split('.'); // TODO-MIKE
+
+    return getBackendSafeRoomName(room);
 }

@@ -35,12 +35,11 @@ export function getCurrentConferenceUrl(stateful: IStateful) {
  * the process of joining one has started. This limitation does not apply to the case when called with the URL object
  * instance. Use {@link isInviteURLReady} to check if it's safe to call the method already.
  *
- * @param {Function|Object} stateOrGetState - The redux state or redux's {@code getState} function or the URL object
+ * @param {Function|Object} _stateOrGetState - The redux state or redux's {@code getState} function or the URL object
  * to be stripped.
  * @returns {string}
  */
-export function getInviteURL(stateOrGetState: IStateful): string {
-    return window.location.ancestorOrigins.length ? window.location.ancestorOrigins[0] : window.location.href;
+export function getInviteURL(_stateOrGetState: IStateful): string {
     // const state = toState(stateOrGetState);
     // let locationURL
     //     = state instanceof URL
@@ -67,6 +66,7 @@ export function getInviteURL(stateOrGetState: IStateful): string {
     // }
 
     // return urlWithoutParams.href;
+    return window.location.ancestorOrigins.length ? window.location.ancestorOrigins[0] : window.location.href;
 }
 
 /**
