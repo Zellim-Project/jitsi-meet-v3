@@ -3,11 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App } from './features/app/components';
 import { getLogger } from './features/base/logging/functions';
 import { Platform } from './features/base/react';
 import { getJitsiMeetGlobalNS } from './features/base/util';
 import PrejoinApp from './features/prejoin/components/web/PrejoinApp';
+import { ZellimVanity } from './zellim/vanity';
 
 const logger = getLogger('index.web');
 const OS = Platform.OS;
@@ -42,7 +42,7 @@ if (OS === 'ios') {
 const globalNS = getJitsiMeetGlobalNS();
 
 globalNS.entryPoints = {
-    APP: App,
+    APP: ZellimVanity,
     PREJOIN: PrejoinApp
 };
 
