@@ -52,7 +52,7 @@ export const ZellimVanity = () => {
     };
   }, []);
 
-  if (inMeet) return <App />;
+  if (inMeet || localStorage.getItem('recorder')) return <App />;
 
   return <ConferenceIframe />;
 };
