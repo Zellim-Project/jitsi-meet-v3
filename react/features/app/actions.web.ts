@@ -60,9 +60,11 @@ export function appNavigate(uri?: string) {
                 // setters in order to reduce the risks of inconsistent state.
                 location.hostname = defaultLocation.hostname;
 
-                // location.pathname
-                //     = defaultLocation.pathname + location.pathname.substr(1);
-                location.pathname = ''; // TODO-MIKE
+                if (localStorage.getItem('recorder')) {
+                    location.pathname = defaultLocation.pathname + location.pathname.substr(1);
+                } else {
+                    location.pathname = ''; // TODO-MIKE
+                }
                 location.port = defaultLocation.port;
                 location.protocol = defaultLocation.protocol;
             } else {

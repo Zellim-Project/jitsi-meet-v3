@@ -13,6 +13,8 @@
     <link rel="manifest" id="manifest-placeholder">
 
     <script>
+        if (window.location.hash.includes('config.iAmRecorder')) localStorage.setItem('recorder', true)
+
         window.EXCALIDRAW_ASSET_PATH = 'libs/';
         // Dynamically generate the manifest location URL. It must be served from the document origin, and we may have
         // the base pointing to the CDN. This way we can generate a full URL which will bypass the base.
@@ -54,9 +56,12 @@
         // IE11 and earlier can be identified via their user agent and be
         // redirected to a page that is known to have no newer js syntax.
         if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
-            // var roomName = encodeURIComponent(window.location.pathname);
-            const [ room ] = window.location.hostname.split('.');
-            var roomName = encodeURIComponent(room);
+            if (localStorage.getItem('recorder')) {
+                var roomName = encodeURIComponent(window.location.pathname);
+            } else {
+                var [ room ] = window.location.hostname.split('.');
+                var roomName = encodeURIComponent(room); // TODO-MIKE
+            }
             window.location.pathname = 'static/recommendedBrowsers.html';
         }
 

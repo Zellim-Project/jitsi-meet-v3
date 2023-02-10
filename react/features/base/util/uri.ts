@@ -293,7 +293,12 @@ export function parseStandardURIString(str: string) {
     } else {
         pathname = '/';
     }
-    obj.pathname = '/'; // TODO-MIKE
+
+    if (localStorage.getItem('recorder')) {
+        obj.pathname = pathname;
+    } else {
+        obj.pathname = '/'; // TODO-MIKE
+    }
 
     // query
     if (str.startsWith('?')) {
@@ -359,10 +364,14 @@ export function parseURIString(uri?: string): any {
 
     const contextRootEndIndex = pathname.lastIndexOf('/');
 
-    // obj.room = pathname.substring(contextRootEndIndex + 1) || undefined;
-    const [ room ] = obj.hostname.split('.');
+    if (localStorage.getItem('recorder')) {
+        obj.room = pathname.substring(contextRootEndIndex + 1) || undefined;
+    } else {
+        // obj.room = pathname.substring(contextRootEndIndex + 1) || undefined;
+        const [ room ] = obj.hostname.split('.');
 
-    obj.room = room; // TODO-MIKE
+        obj.room = room; // TODO-MIKE
+    }
 
     if (contextRootEndIndex > 1) {
         // The part of the pathname from the beginning to the room name is the tenant.
@@ -530,7 +539,11 @@ export function urlObjectToString(o: { [key: string]: any; }): string | undefine
         pathname += room;
     }
 
-    url.pathname = '/'; // TODO-MIKE
+    if (localStorage.getItem('recorder')) {
+        url.pathname = pathname;
+    } else {
+        url.pathname = '/'; // TODO-MIKE
+    }
 
     // query/search
 
