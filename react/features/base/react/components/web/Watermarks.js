@@ -247,7 +247,7 @@ function _mapStateToProps(state, ownProps) {
         && SHOW_JITSI_WATERMARK)
     || !isValidRoom;
     let _logoUrl = logoImageUrl;
-    let _logoLink = logoClickUrl;
+    let _logoLink = defaultLogoClickUrl || logoClickUrl;
 
     if (useDynamicBrandingData) {
         if (isVpaasMeeting(state)) {
@@ -260,7 +260,7 @@ function _mapStateToProps(state, ownProps) {
     } else {
         // When there is no custom branding data use defaults
         _logoUrl = ownProps.defaultJitsiLogoURL || defaultLogoUrl;
-        _logoLink = JITSI_WATERMARK_LINK;
+        _logoLink = defaultLogoClickUrl || JITSI_WATERMARK_LINK;
     }
 
     return {
