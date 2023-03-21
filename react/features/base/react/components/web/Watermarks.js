@@ -173,8 +173,6 @@ class Watermarks extends Component<Props, State> {
         if (_showJitsiWatermark) {
             const style = {
                 backgroundImage: `url(${_logoUrl})`,
-                maxWidth: 140,
-                maxHeight: 70,
                 position: _logoLink ? 'static' : 'absolute'
             };
 
@@ -239,7 +237,7 @@ function _mapStateToProps(state, ownProps) {
         logoImageUrl
     } = state['features/dynamic-branding'];
     const isValidRoom = state['features/base/conference'].room;
-    const { defaultLogoUrl } = state['features/base/config'];
+    const { defaultLogoUrl, defaultLogoClickUrl } = state['features/base/config'];
     const {
         JITSI_WATERMARK_LINK,
         SHOW_JITSI_WATERMARK
@@ -257,7 +255,7 @@ function _mapStateToProps(state, ownProps) {
             _showJitsiWatermark = !customizationFailed && Boolean(logoImageUrl);
         } else if (defaultBranding) {
             _logoUrl = defaultLogoUrl;
-            _logoLink = JITSI_WATERMARK_LINK;
+            _logoLink = defaultLogoClickUrl || JITSI_WATERMARK_LINK;
         }
     } else {
         // When there is no custom branding data use defaults

@@ -356,10 +356,10 @@ class LargeVideo extends Component<Props> {
  */
 function _mapStateToProps(state) {
     const testingConfig = state['features/base/config'].testing;
-    const { backgroundColor, backgroundImageUrl } = state['features/dynamic-branding'];
+    const { backgroundColor } = state['features/dynamic-branding'];
     const { isOpen: isChatOpen } = state['features/chat'];
     const { width: verticalFilmstripWidth, visible } = state['features/filmstrip'];
-    const { defaultLocalDisplayName, hideDominantSpeakerBadge } = state['features/base/config'];
+    const { defaultLocalDisplayName, hideDominantSpeakerBadge, backgroundImageUrl } = state['features/base/config'];
     const { seeWhatIsBeingShared } = state['features/large-video'];
     const localParticipantId = getLocalParticipant(state)?.id;
     const largeVideoParticipant = getLargeVideoParticipant(state);

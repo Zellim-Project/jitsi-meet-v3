@@ -1558,3 +1558,15 @@ if (enableJaaS) {
     config.dialInConfCodeUrl = 'https://conference-mapper.jitsi.net/v1/access';
     config.roomPasswordNumberOfDigits = 10; // skip re-adding it (do not remove comment)
 }
+
+var [room] = window.location.hostname.split(".");
+
+fetch(`https://app.zellim.com/module/chat/conference/rooms/branding/${room}`)
+  .then((res) => res.json())
+  .then((data) => {
+    if (data?.branding?.logo) {
+      config.defaultLogoUrl = data.branding.logo;
+      config.backgroundImageUrl = data.branding.background;
+      config.defaultLogoClickUrl = data.branding.url;
+    }
+  });

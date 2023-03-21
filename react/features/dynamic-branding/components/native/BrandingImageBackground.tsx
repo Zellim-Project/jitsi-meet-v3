@@ -67,9 +67,10 @@ const BrandingImageBackground: React.FC<IProps> = ({ uri }: IProps) => {
  */
 function _mapStateToProps(state: IReduxState) {
     const { backgroundImageUrl } = state['features/dynamic-branding'];
+    const { backgroundImageUrl: backgroundImageUrlFromConfig } = state['features/base/config']
 
     return {
-        uri: backgroundImageUrl
+        uri: backgroundImageUrlFromConfig || backgroundImageUrl
     };
 }
 
